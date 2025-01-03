@@ -201,27 +201,21 @@ class TestProductModel(unittest.TestCase):
     def test_find_by_availability(self):
         """It should Find Products by Availability"""
         products = ProductFactory.create_batch(10)
-        
         # Looping through each product list to create a product and saving it to the database
         for product in products:
             product.create()
-        
         # Retrieve the availability of the first product in the products list.
-        available =  products[0].available
-
+        available = products[0].available
         # Filter only products that are available
         count = len([product for product in products if product.available == available])
-
         # Retrieving the product
         found = Product.find_by_availability(available)
-
         # Assert if the count of the found products matches the expected count.
         self.assertEqual(found.count(), count)
-
         # Looping through to assert the product's availbility is right
         for product in found:
             self.assertEqual(product.available, available)
-    
+
     def test_find_product_by_category(self):
         """It should Find Products by Category"""
         products = ProductFactory.create_batch(10)
@@ -230,7 +224,7 @@ class TestProductModel(unittest.TestCase):
         for product in products:
             product.create()
 
-        # Retrieving the category of the first product within the products list 
+        # Retrieving the category of the first product within the products list
         category = products[0].category
 
         # Filtering products based on their category

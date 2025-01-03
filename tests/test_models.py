@@ -106,7 +106,7 @@ class TestProductModel(unittest.TestCase):
     #
 
     def test_read_a_product(self):
-        """Test to read a product"""
+        """It should Read a Product"""
         product = ProductFactory()
         product.id = None
         product.create()
@@ -119,7 +119,7 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(found_product.price, product.price)
 
     def test_update_a_product(self):
-        """Test to update a product"""  
+        """It should Update a Product"""
 
         # Creating the product
         product = ProductFactory()
@@ -143,7 +143,7 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(products[0].description, "Sale Item")
 
     def test_delete_a_product(self):
-        """Test to Delete a Product"""
+        """It should Delete a Product"""
 
         # Creating the product
         product = ProductFactory()
@@ -174,3 +174,31 @@ class TestProductModel(unittest.TestCase):
         # Asserting that the systemn has retrieved all products sucessfully
         self.assertEqual(len(products), 5)
 
+    def test_find_a_product_by_name(self):
+        """It should Find a Product by Name"""
+        products = ProductFactory.create_batch(5)
+
+        # looping over the products list and creating a product and then saving it to the database.
+        for product in products:
+            product.create()
+
+        # Retrieve the name of the first product in the products list.
+        name = products[0].name
+
+        # Calculating the length of the filtered list
+        count = len([product for product in products if product.name == name])
+
+        # Call the find_by_name function passing the name in the parameter
+        found = Product.find_by_name(name)
+
+        # Assert if the count of the found products matches the expected count.
+        self.assertEqual(found.count(), count)
+
+        # Using a for loop to iterate over the found products and asserting that each product name matches
+        for product in found:
+            self.assertEqual(product.name, name)
+
+
+
+        
+        

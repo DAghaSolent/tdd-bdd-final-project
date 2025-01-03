@@ -141,3 +141,17 @@ class TestProductModel(unittest.TestCase):
         self.assertEqual(len(products), 1)
         self.assertEqual(products[0].id, original_id)
         self.assertEqual(products[0].description, "Sale Item")
+
+    def test_delete_a_product(self):
+        """Test to Delete a Product"""
+
+        # Creating the product
+        product = ProductFactory()
+        product.create()
+
+        # Asserting that the product length is 1 symbolizing the product has been created sucessfully
+        self.assertEqual(len(Product.all()), 1)
+
+        # Deleting the product
+        product.delete()
+        self.assertEqual(len(Product.all()), 0)
